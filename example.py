@@ -10,7 +10,7 @@
 # Please read all the comments in this example file and all others.
 
 import spacy  # importing spacy
-nlp = spacy.load('en_core_web_md') # specifying the model we want to use. Remember to install this model by typing python -m spacy download en_core_web_md into your command line
+nlp = spacy.load('en_core_web_sm') # specifying the model we want to use. Remember to install this model by typing python -m spacy download en_core_web_md into your command line
 
 # Now we are going to look into longer texts and compare them. 
 # Below we  have two lists: one containing complaints submitted to a company, and another of recipes found online.
@@ -69,7 +69,12 @@ for token in recipes:
         print(token.similarity(token_))
 
 # What do you observe? Note that the similarity index has reduced from what we observed in the short-text example discussed in the content PDF.
-
+# Some entries cause an error: UserWarning: [W007] The model you're using has no word vectors loaded, so the result of
+# the Doc.similarity method will be based on the tagger, parser and NER, which may not give useful similarity judgements.
+# This may happen if you're using one of the small models, e.g. `en_core_web_sm`, which don't ship with word vectors
+# and only use context-sensitive tensors. You can always add your own word vectors, or use one of the larger models
+# instead if available. print(token.similarity(token_))
+# The similarity index is reduced by ~.20 to .25. The sm model is smaller so there is less data to make the comparisons with.
 
 # There are several ways to make your model more accurate with the similarity
 # or even prediction such as feeding it with some training data. This could include
